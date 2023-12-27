@@ -1,61 +1,69 @@
-const mongoose=require("mongoose");
-const user = new mongoose.Schema({
-    firstName:{
-        type:String,
-        required:true,
-        trim:true,
+const mongoose = require("mongoose");
+const user = new mongoose.Schema(
+  {
+    firstName: {
+      type: String,
+      required: true,
+      trim: true,
     },
-    lastName:{
-        type:String,
-        required:true,
-        trim:true,
+    lastName: {
+      type: String,
+      required: true,
+      trim: true,
     },
-    email:{
-        type:String,
-        required:true,
-        trim:true,
+    email: {
+      type: String,
+      required: true,
+      trim: true,
     },
-    password:{
-        type:String,
-        required:true,
+    password: {
+      type: String,
+      required: true,
     },
-    accountType:{
-        type:String,
-        enum:["Admin","Student","Instructor"],
-        required:true,
+    accountType: {
+      type: String,
+      enum: ["Admin", "Student", "Instructor"],
+      required: true,
     },
-    additionalDetails:{
-        type:mongoose.Schema.Types.ObjectId,
-        required:true,
-        ref:"Profile",
+    additionalDetails: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "Profile",
     },
-    courses:[
-        {
-            type:mongoose.Schema.Types.ObjectId,
-            required:true,
-            ref:"Course",
-        }
+    courses: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "Course",
+      },
     ],
-    image:{
-        type:String,
-        required:true,
+    image: {
+      type: String,
+      required: true,
     },
-    CourseProgress:[
-        {
-            type:mongoose.Schema.Types.ObjectId,
-            required:true,
-            ref:"CourseProgress",
-        }
+    CourseProgress: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "CourseProgress",
+      },
     ],
-    token:{
-        type:String,
+    token: {
+      type: String,
     },
-    expiresIn:{
-        type:Date,
-    }
+    expiresIn: {
+      type: Date,
+    },
+    active: {
+      type: Boolean,
+      default: true,
+    },
+    approved: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  { timestamps: true }
+);
 
-
-
-});
-
-module.exports=mongoose.model("User",userSchema);
+module.exports = mongoose.model("User", userSchema);
