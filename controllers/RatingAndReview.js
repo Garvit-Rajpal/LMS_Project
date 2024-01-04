@@ -116,7 +116,7 @@ exports.getAvgRating = async (req, res) => {
     if (avgRating.length > 0) {
       return res.status(200).json({
         success: true,
-        message: "Average rating fetched successfully",
+        message: "Average rating has been fetched successfully",
         data: avgRating[0].averageRating,
       });
     }
