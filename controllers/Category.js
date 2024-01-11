@@ -84,6 +84,14 @@ exports.categoryPageDetails = async (req, res) => {
                 $match:{
                 Category:new mongoose.Types.ObjectId(categoryId),
             }},
+            {
+                $addFeild:{
+                    noOfStudents:{
+                        $size:{$ifNull:["$studentsEnrolled",""]},
+                    }
+
+                }
+            },
             // {
             //     $group:{
             //         _id:'$_id',
@@ -91,13 +99,13 @@ exports.categoryPageDetails = async (req, res) => {
             //         studentsEnrolled:{$sum:1},
             //     }
             // },
-            {$group:{
-                _id:'$_id',
-                numStudents: { $count: '$studentsEnrolled'},
+        //     {$group:{
+        //         _id:'$_id',
+        //         numStudents: { $sum: '$studentsEnrolled'},
              
-            }
-        },
-        { $sort: { numStudents: -1 } },
+        //     }
+        // },
+        { $sort: { noOfStudents: -1 } },
         { $limit: 10 }
 
         ]
