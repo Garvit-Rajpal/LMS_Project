@@ -3,7 +3,7 @@ const Section = require("../models/Section");
 const { imageUploader } = require("../utils/imageUploader");
 
 // create subsection
-exports.createSubsection = async (req, res) => {
+exports.createSubSection = async (req, res) => {
   try {
     // fetch data
     const { title, description, sectionId } = req.body;
