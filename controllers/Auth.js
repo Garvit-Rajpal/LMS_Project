@@ -4,6 +4,8 @@ const otpGenerator = require("otp-generator");
 const Profile = require("../models/Profile");
 const jwt = require("jsonwebtoken");
 const sendMail=require("../utils/MailSender");
+const { create } = require("../models/Category");
+const bcrypt = require("bcrypt");
 require("dotenv").config();
 
 // send otp
@@ -85,7 +87,8 @@ exports.signup = async (req, res) => {
       });
     }
     // check if email already exists
-    const user = User.findOne({ email: email });
+    const user = await User.findOne({ email });
+    // console.log(user);
     if (user) {
       return res.status(400).json({
         success: false,
@@ -101,21 +104,24 @@ exports.signup = async (req, res) => {
     }
 
     // fetch otp from the db
-    const recentOtp = OTP.find({ email }).sort({ CreatedAt: -1 }).limit(1);
-
+    const recentOtp =await OTP.find({ email }).sort({ CreatedAt: -1 }).limit(1);
+      console.log( recentOtp[0].otp);
+      console.log( otp);
     // validate otp
     if (recentOtp.length == 0) {
       return res.status(400).json({
         success: false,
         message: "Error while fetching otp",
       });
-    } else if (recentOtp !== otp) {
+    }
+     else if (otp!==recentOtp[0].otp) {
       return res.status(400).json({
         success: false,
         message: "Otp does not match",
       });
     }
     // hashPassword
+    
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // create entry in db
@@ -125,6 +131,7 @@ exports.signup = async (req, res) => {
       about: null,
       contactNumber: null,
     });
+    // console.log("reached here");
     const createdUser = await User.create({
       firstName,
       lastName,
@@ -132,9 +139,9 @@ exports.signup = async (req, res) => {
       accountType,
       password: hashedPassword,
       additionalDetails: profileDetails._id,
-      image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstname} ${lastName}`,
+      image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`,
     });
-
+    //  console.log("Reached here");
     return res.status(200).json({
       success: true,
       message: "User Created Successfully",
@@ -143,6 +150,7 @@ exports.signup = async (req, res) => {
     return res.status(501).json({
       success: false,
       message: "Error in creating user Please try again",
+      error
     });
   }
 };

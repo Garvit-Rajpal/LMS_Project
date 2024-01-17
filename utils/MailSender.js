@@ -4,6 +4,7 @@ require("dotenv");
 // function to send the mail
 const sendMail=async(email,title,body)=>{
     try{
+        console.log(email);
         let transporter=nodemailer.createTransport({
             host:process.env.MAIL_HOST,
             auth:{

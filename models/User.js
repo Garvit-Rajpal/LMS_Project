@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const user = new mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
     firstName: {
       type: String,
@@ -33,7 +33,7 @@ const user = new mongoose.Schema(
     courses: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
+        
         ref: "Course",
       },
     ],
@@ -44,7 +44,7 @@ const user = new mongoose.Schema(
     CourseProgress: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
+        
         ref: "CourseProgress",
       },
     ],

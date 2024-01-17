@@ -11,7 +11,7 @@ const OTPSchema = new mongoose.Schema({
     expires:5*60
   },
   otp: {
-    type: Number,
+    type: String,
   },
 });
 

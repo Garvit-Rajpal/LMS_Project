@@ -1,6 +1,6 @@
 // Import the required modules
-const express=require(express);
-const router=express.Router();
+const express=require("express");
+const router = express.Router()
 
 
 // importing the controllers
@@ -18,4 +18,4 @@ router.post("/changePassword",auth,changePassword);
 router.post("/reset-pass-token",resetPasswordToken);
 router.post("/resetpassword",resetPassword);
 
-module.exports=router;
+module.exports=router
